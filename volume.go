@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"mime/multipart"
 	"net/http"
@@ -14,7 +15,7 @@ type UploadFileResp struct {
 	Size int `json:"size"`
 }
 
-func (c *Client) UploadFile(f *os.File) (UploadFileResp, error) {
+func (c *Client) UploadFile(f *os.File, fid string) (UploadFileResp, error) {
 	var b bytes.Buffer
 	w := multipart.NewWriter(&b)
 
@@ -30,7 +31,7 @@ func (c *Client) UploadFile(f *os.File) (UploadFileResp, error) {
 	req, err := http.NewRequestWithContext(
 		context.Background(),
 		http.MethodPost,
-		c.config.VolumesURL,
+		fmt.Sprintf("%s/%s", c.config.VolumesURL, fid),
 		&b,
 	)
 	resp, err := c.httpClient.Do(req)
