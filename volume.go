@@ -8,23 +8,22 @@ import (
 	"io"
 	"mime/multipart"
 	"net/http"
-	"os"
 )
 
 type UploadFileResp struct {
 	Size int `json:"size"`
 }
 
-func (c *Client) UploadFile(f *os.File, fid string) (UploadFileResp, error) {
+func (c *Client) UploadFile(r io.Reader, fileName string, fid string) (UploadFileResp, error) {
 	var b bytes.Buffer
 	w := multipart.NewWriter(&b)
 
-	ffw, err := w.CreateFormFile("file", f.Name())
+	ffw, err := w.CreateFormFile("file", fileName)
 	if err != nil {
 		return UploadFileResp{}, err
 	}
 
-	io.Copy(ffw, f)
+	io.Copy(ffw, r)
 
 	w.Close()
 
