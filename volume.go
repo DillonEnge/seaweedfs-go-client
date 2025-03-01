@@ -30,7 +30,7 @@ func (c *Client) UploadFile(f *os.File) (UploadFileResp, error) {
 	req, err := http.NewRequestWithContext(
 		context.Background(),
 		http.MethodPost,
-		c.config.BaseURL,
+		c.config.VolumesURL,
 		&b,
 	)
 	resp, err := c.httpClient.Do(req)

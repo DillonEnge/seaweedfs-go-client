@@ -13,7 +13,7 @@ type DirAssignResp struct {
 }
 
 func (c *Client) DirAssign() (DirAssignResp, error) {
-	resp, err := c.httpClient.Get(fmt.Sprintf("%s/dir/assign", c.config.BaseURL))
+	resp, err := c.httpClient.Get(fmt.Sprintf("%s/dir/assign", c.config.MasterURL))
 	if err != nil {
 		return DirAssignResp{}, err
 	}
@@ -37,7 +37,7 @@ type Location struct {
 }
 
 func (c *Client) DirLookup(volumeID string) (DirLookupResp, error) {
-	resp, err := c.httpClient.Get(fmt.Sprintf("%s/dir/lookup?volumeId=%s", c.config.BaseURL, volumeID))
+	resp, err := c.httpClient.Get(fmt.Sprintf("%s/dir/lookup?volumeId=%s", c.config.MasterURL, volumeID))
 	if err != nil {
 		return DirLookupResp{}, err
 	}

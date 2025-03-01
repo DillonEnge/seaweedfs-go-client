@@ -1,5 +1,6 @@
 package seaweedfs
 
 type Config struct {
-	BaseURL string
+	MasterURL  string
+	VolumesURL string
 }
