@@ -34,6 +34,7 @@ func (c *Client) UploadFile(f *os.File, fid string) (UploadFileResp, error) {
 		fmt.Sprintf("%s/%s", c.config.VolumesURL, fid),
 		&b,
 	)
+	req.Header.Add("Content-Type", "multipart/form-data")
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return UploadFileResp{}, err
